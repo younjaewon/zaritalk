@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+h1 {
+  margin: 0;
+}
+h2 {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+input {
+  border: none;
+}
+ul,
+ol,
+li {
+  list-style: none;
+  padding-left: 0;
+}
