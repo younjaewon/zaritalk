@@ -3,12 +3,14 @@ import { Route, Routes } from "react-router-dom";
 import PATH from "@constants/path";
 import Layout from "@routes/Layout";
 import LeasePage from "@pages/LeasePage";
+import LandlordPage from "@pages/LandlordPage";
 
 const Router = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path={PATH.ROOT} element={<LeasePage />} />
+        <Route path={PATH.LANDLORD} element={<LandlordPage />} />
       </Route>
     </Routes>
   );
