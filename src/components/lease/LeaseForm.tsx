@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { ReactComponent as ClickIcon } from "@lib/assets/svg/click.svg";
 import ExpenseInformation from "./ExpenseInformation";
@@ -7,46 +7,70 @@ import InputWithLabel from "@components/common/input/InputWithLabel";
 import CheckBoxWithLabel from "@components/common/CheckBoxWithLabel";
 import Button from "@components/common/Button";
 import { gray } from "@lib/styles/palette";
-import { useLeaseTypeState } from "context/LeaseTypeProvider";
+import { useLeaseActions, useLeaseState } from "context/LeaseTypeProvider";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const LeaseForm = (props: Props) => {
-  const leaseTypeState = useLeaseTypeState();
-  const [deposit, setDeposit] = useState("");
-  const [rent, setRent] = useState("");
-  const [manageCost, setManageCost] = useState("");
-  const [rentDueDate, setRentDueDate] = useState("");
+  const { leaseType, deposit, manageCost, rent, rentDueDate, checkManageCost } = useLeaseState();
+  const { changeLeasePrice, changeDueDate, toggleManageCheck, resetManageCost, onSubmit } = useLeaseActions();
+  const navigate = useNavigate();
 
-  const [checkManageCost, setCheckManageCost] = useState(false);
+  const onLeasePriceSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const res = onSubmit();
 
-  const handleChangeCheckManageCost = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckManageCost(e.target.checked);
-    setManageCost("0");
+    if (res?.code === "success") {
+      navigate("");
+    }
   };
-
-  const handleChangeManageCost = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setManageCost(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {};
-
-  console.log(leaseTypeState);
 
   return (
     <Container>
-      {leaseTypeState && (
+      {leaseType && (
         <>
           <ExpenseInformation />
-          <FormContainer>
+          <FormContainer onSubmit={onLeasePriceSubmit}>
             <InputFormContainer>
               <InputGroup>
-                <InputWithLabel title="보증금" unit="만원" id="deposit" />
-                <InputWithLabel title="월 임대료" unit="만원" id="rent" />
+                <InputWithLabel
+                  title="보증금"
+                  unit="만원"
+                  id="deposit"
+                  name="deposit"
+                  value={deposit}
+                  onChange={(e) => changeLeasePrice(e)}
+                />
+                {leaseType === "monthly" ? (
+                  <InputWithLabel
+                    title="월 임대료"
+                    unit="만원"
+                    id="rent"
+                    name="rent"
+                    value={rent}
+                    onChange={(e) => changeLeasePrice(e)}
+                  />
+                ) : null}
               </InputGroup>
               <InputGroup>
-                <InputWithLabel title="월 관리비" unit="만원" id="manageCost" checked={checkManageCost} />
-                <InputWithLabel title="임대료 납부일" unit="일" id="rentDueDate" />
+                <InputWithLabel
+                  title="월 관리비"
+                  unit="만원"
+                  id="manageCost"
+                  name="manageCost"
+                  checked={checkManageCost}
+                  value={manageCost}
+                  onChange={(e) => changeLeasePrice(e)}
+                />
+                <InputWithLabel
+                  title="임대료 납부일"
+                  unit="일"
+                  id="rentDueDate"
+                  name="rentDueDate"
+                  value={rentDueDate}
+                  onChange={(e) => changeDueDate(e)}
+                />
               </InputGroup>
             </InputFormContainer>
             <CheckboxContainer>
@@ -54,6 +78,11 @@ const LeaseForm = (props: Props) => {
                 msg="관리비는 관리실에 따로 납부하거나 없습니다."
                 name="checkManageCost"
                 id="checkManageCost"
+                isActive={checkManageCost}
+                onChange={(e) => {
+                  toggleManageCheck(e);
+                  resetManageCost();
+                }}
               />
             </CheckboxContainer>
             <Button type="submit">
