@@ -9,6 +9,7 @@ import Button from "@components/common/Button";
 import { gray } from "@lib/styles/palette";
 import { useLeaseActions, useLeaseState } from "context/LeaseTypeProvider";
 import { useNavigate } from "react-router-dom";
+import PATH from "@constants/path";
 
 type Props = {};
 
@@ -22,7 +23,7 @@ const LeaseForm = (props: Props) => {
     const res = onSubmit();
 
     if (res?.code === "success") {
-      navigate("");
+      navigate(PATH.LANDLORD);
     }
   };
 
@@ -79,6 +80,7 @@ const LeaseForm = (props: Props) => {
                 name="checkManageCost"
                 id="checkManageCost"
                 isActive={checkManageCost}
+                checked={checkManageCost}
                 onChange={(e) => {
                   toggleManageCheck(e);
                   resetManageCost();
