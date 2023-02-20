@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { LeaseForm, LeaseTab, Title } from "../components/lease";
+import { LeaseForm, LeaseTab, Header } from "../components/lease";
 
-type Props = {};
-
-const LeasePage = (props: Props) => {
+const LeasePage = () => {
   return (
     <Container>
-      <Title />
+      <Header />
       <LeaseTab />
       <LeaseForm />
     </Container>

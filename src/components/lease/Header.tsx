@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 type Props = {};
 
-const Title = (props: Props) => {
+const Header = (props: Props) => {
   return (
     <Container>
       <h3>
@@ -18,4 +18,4 @@ const Container = styled.div`
   margin-bottom: 50px;
 `;
 
-export default Title;
+export default Header;
