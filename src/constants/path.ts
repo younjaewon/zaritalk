@@ -1,6 +1,6 @@
 const PATH = {
   ROOT: "/",
-  LEASE: "/lease",
+  LANDLORD: "/landlord",
 } as const;
 
 export default PATH;
