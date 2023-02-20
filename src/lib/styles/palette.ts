@@ -10,4 +10,8 @@ const blue = {
   100: "#2C7FFF",
 };
 
-export { gray, blue };
+const black = {
+  100: "#222222",
+};
+
+export { gray, blue, black };
