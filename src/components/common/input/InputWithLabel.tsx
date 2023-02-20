@@ -43,6 +43,7 @@ const Container = styled.div<{ checked: boolean }>`
     input {
       width: 100%;
       background-color: none;
+      text-align: right;
 
       &:focus,
       &:active {
