@@ -16,7 +16,7 @@ const Information = ({ title }: Props) => {
   );
 };
 
-const Container = styled.p`
+const Container = styled.div`
   display: flex;
   gap: 4px;
   font-size: 12px;
@@ -27,6 +27,7 @@ const Container = styled.p`
   }
 
   svg {
+    flex-shrink: 0;
     width: 16px;
     height: 16px;
   }
