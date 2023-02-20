@@ -1,6 +1,6 @@
-import { blue, gray } from "@lib/styles/palette";
 import React from "react";
 import styled, { css } from "styled-components";
+import { blue, gray } from "@lib/styles/palette";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   title: string;
@@ -11,24 +11,26 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const InputWithLabel = ({ title, unit, id, checked = false, ...input }: Props) => {
   return (
-    <InputContainer checked={checked}>
+    <Container checked={checked}>
       <label htmlFor={id}>{title}</label>
       <div>
         <input id={id} {...input} />
         <span>{unit}</span>
       </div>
-    </InputContainer>
+    </Container>
   );
 };
 
-const InputContainer = styled.div<{ checked: boolean }>`
+const Container = styled.div<{ checked: boolean }>`
   display: flex;
   width: 100%;
   padding: 0 12px;
-  background-color: white;
-  border: 1px solid ${gray[200]};
   justify-content: space-between;
   align-items: center;
+
+  & + & {
+    border-left: 1px solid ${gray[200]};
+  }
 
   label {
     color: ${gray[400]};
