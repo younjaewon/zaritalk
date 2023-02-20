@@ -3,11 +3,14 @@ import React from "react";
 import Router from "@routes/Router";
 
 import "./reset.css";
+import LeaseTypeProvider from "context/LeaseTypeProvider";
 
 function App() {
   return (
     <React.Fragment>
-      <Router />
+      <LeaseTypeProvider>
+        <Router />
+      </LeaseTypeProvider>
     </React.Fragment>
   );
 }
