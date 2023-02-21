@@ -11,9 +11,12 @@ const Button = styled.button`
   padding: 12px 8px;
   align-items: center;
   justify-content: center;
-  color: white;
   font-weight: 700;
   box-sizing: 16px;
+
+  span {
+    color: white;
+  }
 `;
 
 export default Button;

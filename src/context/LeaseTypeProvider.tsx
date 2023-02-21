@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
+import REG_EX from "@constants/regEx";
 
 export type LeaseCategoryType = "monthly" | "charter";
 
@@ -21,9 +22,11 @@ interface LeaseActionType {
   changeLeaseType: (type: LeaseCategoryType) => void;
   changeLeaseState: (e: React.ChangeEvent<HTMLInputElement>) => void;
   changeDueDate: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  changeAddress: (address: string) => void;
   toggleManageCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
   resetManageCost: () => void;
-  onSubmit: () => { code: string; value: string } | undefined;
+  onCheck: () => { code: string; value: string } | undefined;
+  onSubmit: () => boolean | undefined;
 }
 
 const LeaseStateContext = createContext({} as LeaseStateContextType);
@@ -31,13 +34,15 @@ const LeaseActionsContext = createContext<LeaseActionType>({
   changeLeaseType: () => {},
   changeLeaseState: () => {},
   changeDueDate: () => {},
+  changeAddress: () => {},
   toggleManageCheck: () => {},
   resetManageCost: () => {},
-  onSubmit: () => ({ code: "error", value: "" }),
+  onCheck: () => ({ code: "error", value: "" }),
+  onSubmit: () => false,
 });
 
 const LeaseTypeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [leasePrice, setLeasePrice] = useState<LeaseStateContextType>({
+  const [leaseState, setLeaseState] = useState<LeaseStateContextType>({
     leaseType: "",
     deposit: "",
     rent: "",
@@ -55,45 +60,61 @@ const LeaseTypeProvider = ({ children }: { children: React.ReactNode }) => {
   const actions: LeaseActionType = useMemo(
     () => ({
       changeLeaseType(type: LeaseCategoryType) {
-        setLeasePrice((prev) => ({ ...prev, leaseType: type }));
+        setLeaseState((prev) => ({ ...prev, leaseType: type }));
       },
       changeLeaseState(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
-        setLeasePrice((prev) => ({ ...prev, [name]: value }));
+        const numberStateArray = ["deposit", "rent", "manageCost", "rentDueDate", "landlordPhone"];
+
+        // 작성하다 맨 첫글자 입력시
+        if (value === "") {
+          setLeaseState((prev) => ({ ...prev, [name]: value }));
+          return;
+        }
+
+        if (numberStateArray.includes(name) && !REG_EX.number(value)) {
+          return;
+        }
+
+        setLeaseState((prev) => ({ ...prev, [name]: value }));
       },
       changeDueDate(e: React.ChangeEvent<HTMLInputElement>) {
-        const regex = /^[0-9\b]+$/;
-        if (e.target.value !== "" && !regex.test(e.target.value)) {
+        const { name, value } = e.target;
+
+        if (value !== "" && !Number(value)) {
           alert("숫자만 입력하세요.");
           return;
         }
 
-        if (Number(e.target.value) > 31) {
+        if (Number(value) > 31) {
           alert("1 ~ 31일 까지 입력해 주세요.");
           return;
         }
 
-        setLeasePrice((prev) => ({ ...prev, rentDueDate: e.target.value }));
+        setLeaseState((prev) => ({ ...prev, [name]: value }));
+      },
+      changeAddress: (address: string) => {
+        setLeaseState((prev) => ({ ...prev, landlordAdress: address }));
       },
       toggleManageCheck(e: React.ChangeEvent<HTMLInputElement>) {
-        setLeasePrice((prev) => ({ ...prev, checkManageCost: e.target.checked }));
+        setLeaseState((prev) => ({ ...prev, checkManageCost: e.target.checked }));
       },
       resetManageCost() {
-        setLeasePrice((prev) => ({ ...prev, manageCost: "0" }));
+        setLeaseState((prev) => ({ ...prev, manageCost: "0" }));
       },
-      onSubmit: () => {
-        const { leaseType, deposit, rent, manageCost, rentDueDate, checkManageCost } = leasePrice;
+      onCheck: () => {
+        const { leaseType, deposit, rent, manageCost, rentDueDate, checkManageCost } = leaseState;
 
         if (leaseType === "") {
           alert("임대 유형을 선택해주세요");
           //return  {code : 'error' msg: '' };
           return;
         }
-        if (deposit === "" || deposit === "0") {
+        if (deposit === "") {
           alert("보증금을 입력해주세요.");
           return;
         }
-        if ((leaseType === "monthly" && rent === "") || rent === "0") {
+        if (leaseType === "monthly" && rent === "") {
           alert("월 임대료를 선택해주세요.");
           return;
         }
@@ -109,12 +130,47 @@ const LeaseTypeProvider = ({ children }: { children: React.ReactNode }) => {
 
         return { code: "success", value: "성공적으로 비용이 저장 되었습니다." };
       },
+      onSubmit: () => {
+        const { landlordAdress, landlordName, landlordPhone, landlordRoom, startDate, endDate } = leaseState;
+
+        if (landlordAdress === "") {
+          alert("주소를 입력해주세요.");
+          return;
+        }
+
+        if (landlordRoom === "") {
+          alert("호실을 입력해주세요.");
+          return;
+        }
+
+        if (landlordName === "") {
+          alert("이름을 입력해주세요.");
+          return;
+        }
+
+        if (startDate === "" || endDate === "") {
+          alert("날자를 선택해주세요.");
+          return;
+        }
+
+        if (landlordPhone === "") {
+          alert("핸드폰 번호를 입력해주세요.");
+          return;
+        }
+
+        if (!REG_EX.phone(landlordPhone)) {
+          alert("핸드폰 형식을 맞춰 주세요. - 제외 10~11자");
+          return;
+        }
+
+        return true;
+      },
     }),
-    [leasePrice]
+    [leaseState]
   );
   return (
     <LeaseActionsContext.Provider value={actions}>
-      <LeaseStateContext.Provider value={leasePrice}>{children}</LeaseStateContext.Provider>
+      <LeaseStateContext.Provider value={leaseState}>{children}</LeaseStateContext.Provider>
     </LeaseActionsContext.Provider>
   );
 };

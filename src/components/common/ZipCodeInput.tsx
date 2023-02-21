@@ -6,9 +6,10 @@ import { black, gray } from "@lib/styles/palette";
 
 type Props = {
   maxLength: number;
+  onChange: (address: string) => void;
 };
 
-const ZipCodeInput = ({ maxLength }: Props) => {
+const ZipCodeInput = ({ maxLength, onChange }: Props) => {
   const [openPostcode, setOpenPostcode] = useState(false);
   const [adress, setAdress] = useState("");
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -46,6 +47,7 @@ const ZipCodeInput = ({ maxLength }: Props) => {
     // 주소 선택 이벤트
     selectAddress: (data: any) => {
       setAdress(data.address);
+      onChange(data.address);
       setOpenPostcode(false);
     },
   };
