@@ -7,7 +7,8 @@ import { black, gray } from "@lib/styles/palette";
 type Props = {};
 
 const ZipCodeInput = ({}: Props) => {
-  const [openPostcode, setOpenPostcode] = useState<boolean>(false);
+  const [openPostcode, setOpenPostcode] = useState(false);
+  const [adress, setAdress] = useState("");
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,6 +17,17 @@ const ZipCodeInput = ({}: Props) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleChangeAdress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAdress(e.target.value);
+  };
+
+  const handleEnterAdress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setOpenPostcode(true);
+    }
+  };
 
   const handleClickOutside = (event: any) => {
     if (wrapperRef && !wrapperRef.current?.contains(event.target)) {
@@ -31,18 +43,21 @@ const ZipCodeInput = ({}: Props) => {
 
     // 주소 선택 이벤트
     selectAddress: (data: any) => {
-      console.log(`
-                주소: ${data.address},
-                우편번호: ${data.zonecode}
-            `);
+      setAdress(data.address);
       setOpenPostcode(false);
     },
   };
 
   return (
     <Container ref={wrapperRef}>
-      <input type="text" placeholder="살고 계신 건물주소 또는 건물명을 입력하세요." />
-      <button onClick={handle.clickButton} className="openPoseBtn">
+      <input
+        type="text"
+        placeholder="살고 계신 건물주소 또는 건물명을 입력하세요."
+        value={adress}
+        onChange={handleChangeAdress}
+        onKeyDown={handleEnterAdress}
+      />
+      <button type="button" onClick={handle.clickButton} className="openPoseBtn">
         <SearchIcon />
       </button>
       {openPostcode && (
@@ -50,7 +65,7 @@ const ZipCodeInput = ({}: Props) => {
           <DaumPostcodeEmbed
             onComplete={handle.selectAddress} // 값을 선택할 경우 실행되는 이벤트
             autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-            defaultQuery="판교역로 235" // 팝업을 열때 기본적으로 입력되는 검색어
+            defaultQuery={adress} // 팝업을 열때 기본적으로 입력되는 검색어
           />
         </ModalContainer>
       )}
@@ -82,6 +97,7 @@ const Container = styled.div`
   .openPoseBtn {
     background: none;
     border: none;
+    padding-top: 4px;
 
     svg {
       width: 18px;

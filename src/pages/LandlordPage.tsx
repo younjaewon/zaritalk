@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Header } from "@components/landlord";
+import { Header, LandlordForm } from "@components/landlord";
 
 const LandlordPage = () => {
   return (
     <Container>
       <Header />
+      <LandlordForm />
     </Container>
   );
 };
