@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import Information from "@components/common/Information";
-import ZipCodeInput from "@components/common/ZipCodeInput";
 import InputWithTitle from "@components/common/input/InputWithTitle";
 import Button from "@components/common/Button";
 import { gray } from "@lib/styles/palette";
+import LandlordZipCode from "./LandlordZipCode";
 
 type Props = {};
 
@@ -13,19 +13,15 @@ const LandlordForm = (props: Props) => {
   return (
     <Container>
       <form action="">
-        <div>
-          <span>거주 건물</span>
-          <ZipCodeInput />
-        </div>
-        <Information title="과거 거주지가 아닌 현재 거주지를 입력해주세요. (과거 거주지 환급도 현재 거주지를 입력해야 합니다.)" />
+        <LandlordZipCode />
         <InputContainer>
           <InputBlock>
-            <InputWithTitle title="호실" suffix="호" placeholder="예) 101" />
-            <InputWithTitle title="세입자(본인) 이름" suffix="" placeholder="예) 홍길동" />
+            <InputWithTitle title="호실" suffix="호" placeholder="예) 101" maxLength={20} />
+            <InputWithTitle title="세입자(본인) 이름" suffix="" placeholder="예) 홍길동" maxLength={20} />
           </InputBlock>
           <InputBlock>
-            <InputWithTitle title="계약시작일" type="date" arrowIcon={true} />
-            <InputWithTitle title="계약종료일" type="date" arrowIcon={true} />
+            <InputWithTitle title="계약시작일" type="date" />
+            <InputWithTitle title="계약종료일" type="date" />
           </InputBlock>
         </InputContainer>
         <Information title="정확히 모를 경우 임의로 작성 후 수정요청 하세요." />

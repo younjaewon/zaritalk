@@ -4,9 +4,11 @@ import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "@lib/assets/svg/search.svg";
 import { black, gray } from "@lib/styles/palette";
 
-type Props = {};
+type Props = {
+  maxLength: number;
+};
 
-const ZipCodeInput = ({}: Props) => {
+const ZipCodeInput = ({ maxLength }: Props) => {
   const [openPostcode, setOpenPostcode] = useState(false);
   const [adress, setAdress] = useState("");
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -53,6 +55,7 @@ const ZipCodeInput = ({}: Props) => {
       <input
         type="text"
         placeholder="살고 계신 건물주소 또는 건물명을 입력하세요."
+        maxLength={maxLength}
         value={adress}
         onChange={handleChangeAdress}
         onKeyDown={handleEnterAdress}
