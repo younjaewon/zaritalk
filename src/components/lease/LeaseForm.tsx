@@ -61,6 +61,7 @@ const LeaseForm = (props: Props) => {
                   id="manageCost"
                   name="manageCost"
                   checked={checkManageCost}
+                  disabled={checkManageCost}
                   value={manageCost}
                   onChange={(e) => changeLeasePrice(e)}
                 />

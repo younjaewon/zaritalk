@@ -16,7 +16,6 @@ const Container = styled.div`
   background-color: white;
   border: 1px solid ${gray[200]};
   border-radius: 4px;
-  align-items: center;
 `;
 
 export default InputGroup;
