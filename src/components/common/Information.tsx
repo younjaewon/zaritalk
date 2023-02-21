@@ -18,6 +18,7 @@ const Information = ({ title }: Props) => {
 
 const Container = styled.div`
   display: flex;
+  margin-top: 8px;
   gap: 4px;
   font-size: 12px;
   color: ${gray[300]};
