@@ -26,6 +26,7 @@ const Header = (props: Props) => {
 
 const Container = styled.div`
   width: 100%;
+  margin-bottom: 25px;
   padding: 32px 24px;
   align-items: center;
   text-align: center;
