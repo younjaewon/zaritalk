@@ -15,12 +15,12 @@ type Props = {};
 
 const LeaseForm = (props: Props) => {
   const { leaseType, deposit, manageCost, rent, rentDueDate, checkManageCost } = useLeaseState();
-  const { changeLeaseState, changeDueDate, toggleManageCheck, resetManageCost, onSubmit } = useLeaseActions();
+  const { changeLeaseState, changeDueDate, toggleManageCheck, resetManageCost, onCheck } = useLeaseActions();
   const navigate = useNavigate();
 
   const onLeasePriceSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = onSubmit();
+    const res = onCheck();
 
     if (res?.code === "success") {
       navigate(PATH.LANDLORD);
