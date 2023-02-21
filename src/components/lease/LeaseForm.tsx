@@ -15,7 +15,7 @@ type Props = {};
 
 const LeaseForm = (props: Props) => {
   const { leaseType, deposit, manageCost, rent, rentDueDate, checkManageCost } = useLeaseState();
-  const { changeLeasePrice, changeDueDate, toggleManageCheck, resetManageCost, onSubmit } = useLeaseActions();
+  const { changeLeaseState, changeDueDate, toggleManageCheck, resetManageCost, onSubmit } = useLeaseActions();
   const navigate = useNavigate();
 
   const onLeasePriceSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +41,7 @@ const LeaseForm = (props: Props) => {
                   id="deposit"
                   name="deposit"
                   value={deposit}
-                  onChange={(e) => changeLeasePrice(e)}
+                  onChange={(e) => changeLeaseState(e)}
                 />
                 {leaseType === "monthly" ? (
                   <InputWithLabel
@@ -50,7 +50,7 @@ const LeaseForm = (props: Props) => {
                     id="rent"
                     name="rent"
                     value={rent}
-                    onChange={(e) => changeLeasePrice(e)}
+                    onChange={(e) => changeLeaseState(e)}
                   />
                 ) : null}
               </InputGroup>
@@ -63,7 +63,7 @@ const LeaseForm = (props: Props) => {
                   checked={checkManageCost}
                   disabled={checkManageCost}
                   value={manageCost}
-                  onChange={(e) => changeLeasePrice(e)}
+                  onChange={(e) => changeLeaseState(e)}
                 />
                 <InputWithLabel
                   title="임대료 납부일"

@@ -9,11 +9,17 @@ interface LeaseStateContextType {
   manageCost: string;
   checkManageCost: boolean;
   rentDueDate: string;
+  landlordAdress: string;
+  landlordRoom: string;
+  landlordName: string;
+  startDate: string;
+  endDate: string;
+  landlordPhone: string;
 }
 
 interface LeaseActionType {
   changeLeaseType: (type: LeaseCategoryType) => void;
-  changeLeasePrice: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  changeLeaseState: (e: React.ChangeEvent<HTMLInputElement>) => void;
   changeDueDate: (e: React.ChangeEvent<HTMLInputElement>) => void;
   toggleManageCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
   resetManageCost: () => void;
@@ -23,7 +29,7 @@ interface LeaseActionType {
 const LeaseStateContext = createContext({} as LeaseStateContextType);
 const LeaseActionsContext = createContext<LeaseActionType>({
   changeLeaseType: () => {},
-  changeLeasePrice: () => {},
+  changeLeaseState: () => {},
   changeDueDate: () => {},
   toggleManageCheck: () => {},
   resetManageCost: () => {},
@@ -38,6 +44,12 @@ const LeaseTypeProvider = ({ children }: { children: React.ReactNode }) => {
     manageCost: "",
     checkManageCost: false,
     rentDueDate: "",
+    landlordAdress: "",
+    landlordName: "",
+    landlordPhone: "",
+    landlordRoom: "",
+    startDate: "",
+    endDate: "",
   });
 
   const actions: LeaseActionType = useMemo(
@@ -45,7 +57,7 @@ const LeaseTypeProvider = ({ children }: { children: React.ReactNode }) => {
       changeLeaseType(type: LeaseCategoryType) {
         setLeasePrice((prev) => ({ ...prev, leaseType: type }));
       },
-      changeLeasePrice(e: React.ChangeEvent<HTMLInputElement>) {
+      changeLeaseState(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
         setLeasePrice((prev) => ({ ...prev, [name]: value }));
       },
