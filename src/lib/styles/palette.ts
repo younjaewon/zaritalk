@@ -4,6 +4,7 @@ const gray = {
   300: "#7A7A7A",
   400: "#B4B4B4",
   500: "#F2F2F2",
+  600: "#C8C8C8",
 };
 
 const blue = {
