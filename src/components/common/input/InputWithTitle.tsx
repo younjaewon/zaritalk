@@ -1,23 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import InputGroup from "@components/common/input/InputGroup";
-import { ReactComponent as LeftArrowIcon } from "@lib/assets/svg/leftArrow.svg";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   title: string;
   suffix?: string;
-  arrowIcon?: boolean;
 }
 
-const InputWithTitle = ({ title, suffix, arrowIcon, ...input }: Props) => {
+const InputWithTitle = ({ title, suffix, ...input }: Props) => {
   return (
     <Container>
-      <span>{title}</span>
+      <span className="title">{title}</span>
       <InputGroup>
         <Wrapper>
           <input {...input} />
           <span>{suffix}</span>
-          {arrowIcon && <LeftArrowIcon />}
         </Wrapper>
       </InputGroup>
     </Container>
@@ -29,6 +26,10 @@ const Container = styled.div`
   width: 100%;
   flex-direction: column;
   gap: 8px;
+
+  .title {
+    font-size: 14px;
+  }
 `;
 
 const Wrapper = styled.div`
