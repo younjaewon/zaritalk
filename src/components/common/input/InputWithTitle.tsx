@@ -47,4 +47,4 @@ const Wrapper = styled.div`
     font-size: 14px;
   }
 `;
-export default InputWithTitle;
+export default React.memo(InputWithTitle);

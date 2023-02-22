@@ -166,7 +166,7 @@ const LeaseTypeProvider = ({ children }: { children: React.ReactNode }) => {
         return true;
       },
     }),
-    [leaseState]
+    []
   );
   return (
     <LeaseActionsContext.Provider value={actions}>

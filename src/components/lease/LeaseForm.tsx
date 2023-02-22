@@ -41,7 +41,7 @@ const LeaseForm = (props: Props) => {
                   id="deposit"
                   name="deposit"
                   value={deposit}
-                  onChange={(e) => changeLeaseState(e)}
+                  onChange={changeLeaseState}
                 />
                 {leaseType === "monthly" ? (
                   <InputWithLabel
@@ -50,7 +50,7 @@ const LeaseForm = (props: Props) => {
                     id="rent"
                     name="rent"
                     value={rent}
-                    onChange={(e) => changeLeaseState(e)}
+                    onChange={changeLeaseState}
                   />
                 ) : null}
               </InputGroup>
@@ -63,7 +63,7 @@ const LeaseForm = (props: Props) => {
                   checked={checkManageCost}
                   disabled={checkManageCost}
                   value={manageCost}
-                  onChange={(e) => changeLeaseState(e)}
+                  onChange={changeLeaseState}
                 />
                 <InputWithLabel
                   title="임대료 납부일"
@@ -71,7 +71,7 @@ const LeaseForm = (props: Props) => {
                   id="rentDueDate"
                   name="rentDueDate"
                   value={rentDueDate}
-                  onChange={(e) => changeDueDate(e)}
+                  onChange={changeDueDate}
                 />
               </InputGroup>
             </InputFormContainer>

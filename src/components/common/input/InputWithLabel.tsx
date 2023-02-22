@@ -69,4 +69,4 @@ const Container = styled.div<{ checked: boolean }>`
       }
     `}
 `;
-export default InputWithLabel;
+export default React.memo(InputWithLabel);
