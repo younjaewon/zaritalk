@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { gray } from "@lib/styles/palette";
 import { ReactComponent as HomeIcon } from "@lib/assets/svg/home.svg";
@@ -11,7 +11,7 @@ type Props = {};
 
 const SuccessPage = (props: Props) => {
   const { leaseType, deposit, rent, landlordAdress, manageCost, rentDueDate, startDate, endDate } = useLeaseState();
-  const refund = getRefund({ leaseType, rent });
+  const refund = useMemo(() => getRefund({ rent }), [rent]);
 
   return (
     <Container>

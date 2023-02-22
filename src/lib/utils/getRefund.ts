@@ -1,9 +1,8 @@
 type getRefundType = {
-  leaseType: string;
   rent: string;
 };
 
-const getRefund = ({ leaseType, rent }: getRefundType) => {
+const getRefund = ({ rent }: getRefundType) => {
   let refund = 0; // 환급금
   const baseMonth = 60; // 5년치 계산
 
